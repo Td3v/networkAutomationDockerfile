@@ -41,10 +41,12 @@ RUN yum -y install vim && \
 	pip3 install python-gitlab && \
 	pip2 install requests_ntlm && \
 	pip3 install requests_ntlm && \
+	pip2 install jxmlease && \
+	pip3 install jxmlease && \
 	useradd -m automationUser && \
-	ansible-galaxy install Juniper.junos && \
 	mkdir -p /usr/share/ansible/plugins/modules && \
 	cd /usr/share/ansible/plugins/modules && \
+	ansible-galaxy install Juniper.junos -p /usr/share/ansible/plugins/modules && \
 	git clone https://github.com/networktocode/ntc-ansible --recursive && \
 	git config --global http.sslverify false
 
