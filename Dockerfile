@@ -41,13 +41,21 @@ RUN yum -y install vim && \
 	pip3 install python-gitlab && \
 	pip2 install requests_ntlm && \
 	pip3 install requests_ntlm && \
+	pip2 install jxmlease && \
+	pip3 install jxmlease && \
 	useradd -m automationUser && \
-	ansible-galaxy install Juniper.junos && \
+	mkdir -p /usr/share/ansible/roles && \	
+	ansible-galaxy install Juniper.junos -p /usr/share/ansible/roles && \
 	mkdir -p /usr/share/ansible/plugins/modules && \
 	cd /usr/share/ansible/plugins/modules && \
 	git clone https://github.com/networktocode/ntc-ansible --recursive && \
 	git config --global http.sslverify false
 
+#Create ansible cfg file
+RUN mkdir -p /etc/ansible && \
+    touch /etc/ansible/ansible.cfg && \
+	echo $'[defaults] \nhost_key_checking = False \nretry_files_enabled = False \nhash_behaviour = merge' > /etc/ansible/ansible.cfg
+	
 WORKDIR /home/automationUser
 
 USER automationUser
